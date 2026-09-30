@@ -1,0 +1,75 @@
+.list-header-layout {
+  // Using theme variables for consistency across Light/Dark modes
+  background-color: var(--theme-bg);
+
+  .list-header-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    // Border styling using Payload standardized border color variable
+    // var(--theme-elevation-200) often works well as a border in Payload's theme system
+    border-top: 1px solid var(--theme-elevation-200);
+    border-bottom: 1px solid var(--theme-elevation-200);
+
+    margin-bottom: 2rem; // Space between header and list content
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .header-left {
+    h1 {
+      margin: 0;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      margin: 0;
+      opacity: 0.7;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .btn {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
+}
+
+// Refined override: Keep default header visible (for Bulk Actions) but hide redundant Title and Create Button
+:root:has(.list-header-layout) {
+  // Ensure the default header container is visible
+  .collection-list__header,
+  header.list-header,
+  .gutter-header {
+    display: flex !important; // Restore display
+    margin-bottom: 0 !important; // Reduce spacing if needed
+    border-bottom: none !important; // seamless look
+  }
+
+  // Hide the Default Title
+  .collection-list__header h1,
+  header.list-header h1 {
+    display: none !important;
+  }
+
+  // Hide the Default "Create New" button
+  // We effectively target the anchor link that goes to the create page
+  .collection-list__header a[href*='/create'],
+  header.list-header a[href*='/create'],
+  .gutter-header a[href*='/create'] {
+    display: none !important;
+  }
+}

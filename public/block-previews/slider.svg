@@ -1,0 +1,29 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" rx="16" fill="#0F172A"/>
+  <rect x="40" y="40" width="520" height="320" rx="16" fill="url(#slider_grad)" stroke="#F59E0B" stroke-width="2"/>
+  <defs>
+    <linearGradient id="slider_grad" x1="0" y1="0" x2="600" y2="400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#312E81"/>
+      <stop offset="1" stop-color="#1E1B4B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left/Right Arrows -->
+  <circle cx="70" cy="200" r="20" fill="#0F172A" opacity="0.8"/>
+  <path d="M74 192L66 200L74 208" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <circle cx="530" cy="200" r="20" fill="#0F172A" opacity="0.8"/>
+  <path d="M526 192L534 200L526 208" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Content -->
+  <rect x="120" y="110" width="360" height="32" rx="6" fill="#FFFFFF"/>
+  <rect x="150" y="155" width="300" height="16" rx="4" fill="#94A3B8"/>
+  <rect x="180" y="180" width="240" height="16" rx="4" fill="#64748B"/>
+  <rect x="230" y="225" width="140" height="44" rx="22" fill="#ED1F24"/>
+
+  <!-- Dots -->
+  <circle cx="270" cy="320" r="6" fill="#ED1F24"/>
+  <circle cx="290" cy="320" r="5" fill="#64748B"/>
+  <circle cx="310" cy="320" r="5" fill="#64748B"/>
+  <circle cx="330" cy="320" r="5" fill="#64748B"/>
+</svg>

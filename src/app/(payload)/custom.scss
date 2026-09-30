@@ -1,0 +1,330 @@
+@import '~@payloadcms/ui/scss';
+@import '../../../node_modules/payloadcms-lexical-ext/build/client.css';
+
+@layer payload-default {
+  :root {
+    --app-header-height: calc(var(--base) * 5);
+    --brand-primary: #ed1f24;
+    --brand-primary-rgb: 237, 31, 36;
+    --border-radius-m: 10px;
+    --border-radius-l: 14px;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.3);
+  }
+
+  [data-theme='dark'] {
+    --glass-bg: rgba(20, 20, 20, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+
+  .nav {
+    border-right: 1px solid var(--theme-elevation-150);
+    background-color: var(--theme-elevation-50);
+    width: 300px !important;
+
+    &__scroll {
+      padding-left: 5px !important;
+    }
+
+    nav a,
+    .nav__link {
+      margin: 0 base(0.5);
+      width: auto !important;
+      max-width: calc(100% - #{base(1)});
+      box-sizing: border-box;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: var(--border-radius-m);
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      white-space: nowrap; // Don't "bend" the text
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        text-decoration: none !important;
+        background-color: rgba(var(--brand-primary-rgb), 0.08);
+        border-color: rgba(var(--brand-primary-rgb), 0.15);
+        color: var(--brand-primary);
+
+        .nav__icon {
+          color: var(--brand-primary);
+          transform: translateX(2px);
+        }
+      }
+    }
+
+    nav a,
+    nav a.active,
+    .nav__link,
+    .nav__link.active {
+      padding: base(0.4) base(0.6);
+      margin-bottom: base(0.25);
+    }
+
+    nav a,
+    .nav__link {
+      .nav__icon {
+        color: var(--theme-elevation-400);
+        transition: transform 0.2s ease, color 0.2s ease;
+        flex-shrink: 0;
+      }
+    }
+
+    nav a.active,
+    .nav__link.active {
+      background-color: rgba(var(--brand-primary-rgb), 0.12);
+      border-color: rgba(var(--brand-primary-rgb), 0.2);
+      color: var(--brand-primary);
+      font-weight: 600;
+
+      .nav__icon {
+        color: var(--brand-primary);
+      }
+    }
+
+    &__link-label {
+      font-size: base(0.8);
+      letter-spacing: 0.01em;
+    }
+
+    &__icon {
+      width: 18px;
+      height: 18px;
+      margin-right: base(0.6);
+    }
+
+    &__log-out {
+      margin: base(1) base(0.5);
+      border-radius: var(--border-radius-m);
+      transition: background-color 0.2s;
+
+      &:hover {
+        background-color: var(--theme-elevation-150);
+      }
+    }
+  }
+
+  .nav-group {
+    margin-bottom: base(1.5);
+    padding: 0 base(0.5) 0 0;
+
+    &__toggle {
+      color: var(--theme-elevation-400);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: base(0.25);
+    }
+
+    &__label {
+      padding: 0 base(0.25);
+      font-family: inherit;
+      font-size: base(0.65);
+    }
+  }
+
+  /* Global UI Refinements */
+  .card, .dashboard-stats__card, .dashboard-stats__table-container {
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border-radius: var(--border-radius-l) !important;
+    border: 1px solid var(--theme-elevation-150) !important;
+    overflow: hidden;
+
+    &:hover {
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  .btn {
+    border-radius: var(--border-radius-m) !important;
+    transition: all 0.2s ease;
+    font-weight: 500;
+
+    &--style-primary {
+      background-color: var(--brand-primary);
+      &:hover {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(var(--brand-primary-rgb), 0.3);
+      }
+    }
+  }
+
+  /* Target specific inputs to avoid breaking complex components like Select */
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="number"],
+  input[type="tel"],
+  textarea {
+    border-radius: var(--border-radius-m);
+    border: 1px solid var(--theme-elevation-200);
+    padding: base(0.5) base(0.75);
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      border-color: var(--brand-primary);
+      box-shadow: 0 0 0 2px rgba(var(--brand-primary-rgb), 0.1);
+    }
+  }
+
+  /* Specific fix for Payload's Select components */
+  .field-type.select {
+    .react-select__control {
+      border-radius: var(--border-radius-m);
+      border: 1px solid var(--theme-elevation-200);
+
+      &:hover {
+        border-color: var(--theme-elevation-300);
+      }
+
+      &--is-focused {
+        border-color: var(--brand-primary) !important;
+        box-shadow: 0 0 0 2px rgba(var(--brand-primary-rgb), 0.1) !important;
+      }
+    }
+
+    /* Fix for the internal input of react-select which caused the red outline issue */
+    .react-select__input-container,
+    .react-select__input {
+       border: none !important;
+       box-shadow: none !important;
+       padding: 0 !important;
+       margin: 0 !important;
+    }
+  }
+
+  /* Password Toggle Button */
+  .password-toggle-field {
+    position: relative;
+
+    input {
+      padding-right: 44px;
+    }
+
+    .password-toggle-button {
+      position: absolute;
+      right: 12px;
+      top: 32px;
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: none;
+      padding: 0 4px;
+      cursor: pointer;
+      color: var(--theme-elevation-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--brand-primary);
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  /* Custom Modern Scrollbars */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--theme-elevation-50);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--theme-elevation-200);
+    border-radius: 10px;
+    border: 3px solid var(--theme-elevation-50);
+
+    &:hover {
+      background: var(--theme-elevation-300);
+    }
+  }
+
+  /* Global edit tabs as left-side secondary sidebar */
+  @media (min-width: 1025px) {
+    .collection-edit[class*='global-edit--'] {
+      .tabs-field:not(.tabs-field--within-collapsible) {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: base(1.5);
+        align-items: start;
+      }
+
+      .tabs-field:not(.tabs-field--within-collapsible) .tabs-field__tabs-wrap {
+        position: sticky;
+        top: calc(var(--app-header-height) + #{base(1)});
+        max-height: calc(100vh - var(--app-header-height) - #{base(2)});
+        overflow-y: auto;
+        padding: 0 base(1);
+        border-right: 1px solid var(--theme-elevation-150);
+        border-bottom: 0 !important;
+        box-shadow: none !important;
+      }
+
+      .tabs-field:not(.tabs-field--within-collapsible) .tabs-field__tabs {
+        display: flex;
+        flex-direction: column;
+        gap: base(0.25);
+        align-items: stretch;
+        border-bottom: 0 !important;
+      }
+
+      .tabs-field:not(.tabs-field--within-collapsible) .tabs-field__content-wrap {
+        min-width: 0;
+      }
+
+      .tabs-field__tab-button {
+        width: 100%;
+        text-align: left;
+        justify-content: flex-start;
+        display: flex;
+        align-items: center;
+        border-radius: var(--border-radius-m);
+        padding: base(0.55) base(0.75) !important;
+        border: 1px solid transparent !important;
+        border-bottom: 1px solid transparent !important;
+        margin: 0 0 base(0.25) 0 !important;
+        transition: all 0.2s ease;
+        box-shadow: none !important;
+        background-image: none !important;
+        min-height: auto;
+
+        &:hover {
+          background-color: rgba(var(--brand-primary-rgb), 0.08);
+          border-color: rgba(var(--brand-primary-rgb), 0.14);
+          color: var(--brand-primary);
+        }
+
+        &--active {
+          background-color: rgba(var(--brand-primary-rgb), 0.12) !important;
+          border-color: rgba(var(--brand-primary-rgb), 0.2) !important;
+          border-bottom-color: rgba(var(--brand-primary-rgb), 0.2) !important;
+          color: var(--brand-primary) !important;
+          font-weight: 600 !important;
+          box-shadow: none !important;
+          text-decoration: none !important;
+        }
+      }
+
+      .tabs-field__tab-button::after,
+      .tabs-field__tab-button::before,
+      .tabs-field__tab-button--active::after,
+      .tabs-field__tab-button--active::before {
+        display: none !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+.success-stories-list-view {
+  .success-stories-header {
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-left {
+      h1 {
+        margin: 0;
+        margin-bottom: 0.5rem;
+      }
+      p {
+        margin: 0;
+        opacity: 0.7;
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      // Ensure button styles match Payload
+      .btn {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// Global override to hide the default Payload header when our custom header is present
+// We use :has() to ensure we only affect pages containing our custom component
+:root:has(.success-stories-list-view) {
+  // Hide the standard collection list header
+  // Common Payload classes for the top header
+  .collection-list__header,
+  header.list-header {
+    display: none !important;
+  }
+
+  // Fallback: If classes change, target the H1 matching the collection name if unrelated to ours
+  // (Optional, sticking to specific classes first is safer)
+}

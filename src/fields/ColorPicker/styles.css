@@ -1,0 +1,40 @@
+.color-picker-field .field-label {
+  margin-bottom: 15px;
+}
+
+.color-picker-container {
+  display: flex;
+  gap: 10px;
+  align-items: stretch; /* Match height of children */
+}
+
+.color-input {
+  width: 50px;
+  height: auto; /* Let it stretch or define fixed height if needed */
+  min-height: 40px;
+  padding: 0;
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 4px; /* Standard radius guess */
+  background: var(--theme-elevation-0);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.text-input {
+  flex-grow: 1; /* Make it fill space */
+  height: 40px; /* Standardish */
+  padding: 10px 12px;
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 4px;
+  background: var(--theme-elevation-0);
+  color: var(--theme-elevation-800);
+  font-family: inherit; /* Use default font, not monospace */
+  font-size: 1rem;
+  line-height: normal;
+}
+
+.text-input:focus,
+.color-input:focus {
+  outline: none;
+  border-color: var(--theme-elevation-400); /* Highlight on focus */
+}

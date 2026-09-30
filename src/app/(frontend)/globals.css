@@ -1,0 +1,522 @@
+@import 'tailwindcss';
+@plugin 'tailwindcss-animate';
+@plugin '@tailwindcss/typography';
+
+@variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --font-sans: var(--font-ubuntu), var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #09090b;
+
+  --card: #f9fafb;
+  --card-foreground: #09090b;
+
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
+
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #18181b;
+
+  --success: #bbf7d0;
+  --warning: #fef08a;
+  --error: #fecaca;
+
+  --radius: 0.5rem;
+
+  /* Aashayein Branding */
+  --brand-primary: #ed1f24;
+  --brand-primary-hover: #d11b20;
+  --brand-secondary: #f59e0b;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-ubuntu), sans-serif !important;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem;
+    }
+    h2 {
+      font-size: 1.75rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--brand-primary);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-primary-hover);
+  }
+
+  ::selection {
+    background-color: var(--brand-primary);
+    color: #fff;
+  }
+}
+
+@theme {
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-hover: var(--brand-primary-hover);
+  --color-brand-secondary: var(--brand-secondary);
+
+  --animate-fadeInUp: fadeInUp 0.6s ease-out;
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+[data-theme='dark'] {
+  --background: #09090b;
+  --foreground: #fafafa;
+
+  --card: #09090b;
+  --card-foreground: #fafafa;
+
+  --popover: #09090b;
+  --popover-foreground: #fafafa;
+
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fafafa;
+
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #d4d4d8;
+
+  --success: #052e16;
+  --warning: #422006;
+  --error: #450a0a;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Global Pointer Cursor for all interactive elements */
+  a,
+  button,
+  [role='button'],
+  input[type='button'],
+  input[type='submit'],
+  input[type='reset'],
+  summary,
+  .cursor-pointer,
+  .cursor-pointer * {
+    cursor: pointer !important;
+  }
+
+  /* Ensure disabled elements show not-allowed cursor */
+  button:disabled,
+  input:disabled,
+  [disabled] {
+    cursor: not-allowed !important;
+  }
+}
+
+/* Hard contrast for prose */
+@layer base {
+  .prose {
+    --tw-prose-body: var(--foreground);
+    --tw-prose-headings: var(--foreground);
+    --tw-prose-links: var(--foreground);
+    --tw-prose-bold: var(--foreground);
+    --tw-prose-counters: var(--foreground);
+    --tw-prose-bullets: var(--foreground);
+    --tw-prose-hr: var(--border);
+    --tw-prose-quotes: var(--foreground);
+    --tw-prose-quote-borders: var(--border);
+    --tw-prose-captions: var(--muted-foreground);
+    --tw-prose-code: var(--foreground);
+    --tw-prose-pre-code: var(--foreground);
+    --tw-prose-pre-bg: var(--secondary);
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
+    max-width: 65ch;
+  }
+
+  .prose:not(.prose-invert) :where(h1, h2, h3, h4, h5, h6, b, strong, th) {
+    color: var(--foreground) !important;
+    font-weight: 800;
+  }
+
+  .prose:not(.prose-invert) :where(p, li, blockquote, td) {
+    color: var(--foreground) !important;
+    line-height: 1.75;
+  }
+
+  .prose a {
+    color: var(--brand-primary) !important;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .payload-richtext p:empty,
+  .payload-richtext p:has(> br:only-child) {
+    display: none;
+  }
+}
+
+/* Custom Scrollbar Utility */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #cbd5e1;
+}
+
+/* Popup Form Refinements */
+.popup-form {
+  width: 100%;
+}
+
+.popup-form .container {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.popup-form form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-form .grid {
+  gap: 1rem !important;
+}
+
+.popup-form input,
+.popup-form select,
+.popup-form textarea {
+  background-color: white !important;
+  border-color: #e2e8f0 !important;
+  border-radius: 8px !important;
+  font-size: 0.875rem !important;
+  height: 2.5rem !important;
+  width: 100% !important;
+  transition: all 0.2s ease-in-out !important;
+  text-align: left !important;
+}
+
+.popup-form input:focus,
+.popup-form select:focus,
+.popup-form textarea:focus {
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 0 0 3px rgba(237, 31, 36, 0.1) !important;
+}
+
+.popup-form label {
+  color: #1e293b !important;
+  font-weight: 500 !important;
+  margin-bottom: 0.25rem !important;
+  font-size: 0.875rem !important;
+  display: block;
+  text-align: left !important;
+}
+
+html {
+  opacity: 0;
+}
+
+html[data-theme='dark'],
+html[data-theme='light'] {
+  opacity: initial;
+}
+
+/* Legal Page Specific Styles */
+.legal-page .prose {
+  max-width: 56rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.legal-page .container {
+  max-width: 56rem !important;
+  margin: 0 auto !important;
+}
+
+.legal-page .prose h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1rem;
+}
+
+.legal-page .prose h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.legal-page .prose h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.legal-page .prose h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.legal-page .prose p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #334155;
+  margin-bottom: 2rem;
+}
+
+.legal-page .prose ul,
+.legal-page .prose ol {
+  font-size: 1.125rem;
+  color: #334155;
+  margin-bottom: 2rem;
+  margin-left: 1.5rem;
+}
+
+.legal-page .prose ul {
+  list-style-type: disc;
+}
+
+.legal-page .prose ol {
+  list-style-type: decimal;
+}
+
+.legal-page .prose li {
+  margin-bottom: 0.75rem;
+  line-height: 1.8;
+  padding-left: 0.5rem;
+}
+
+.legal-page .prose strong {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.legal-page .prose a {
+  color: #ed1f24;
+  text-decoration: none;
+}
+
+.legal-page .prose a:hover {
+  text-decoration: underline;
+}
+
+/* Override for High Impact Hero dark background */
+
+/* Override for High Impact Hero dark background - Specificity Boost */
+.legal-page .high-impact-hero-content {
+  color: white !important;
+}
+.legal-page .high-impact-hero-content.prose :where(h1, h2, h3, h4, h5, h6, p, li, strong, b, a) {
+  color: white !important;
+}
+.legal-page .high-impact-hero-content .border-slate-200 {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Transform Lexical inline styled links & custom button classes strictly inside Dynamic Pages */
+.dynamic-page-container .payload-richtext a:has(span[style*="background-color"]),
+.dynamic-page-container .payload-richtext a.btn-custom,
+.dynamic-page-container .payload-richtext a.btn-red,
+.dynamic-page-container .payload-richtext .btn-red {
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+.dynamic-page-container .payload-richtext a span[style*="background-color"],
+.dynamic-page-container .payload-richtext a.btn-custom,
+.dynamic-page-container .payload-richtext a.btn-red,
+.dynamic-page-container .payload-richtext .btn-red,
+.dynamic-page-container .payload-richtext a[role="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.75rem;
+  border-radius: 0.75rem !important; /* 12px rounded pill like Enroll Now image */
+  background-color: #ED1F24 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 10px rgba(237, 31, 36, 0.25);
+  border: none !important;
+}
+
+.dynamic-page-container .payload-richtext a:hover span[style*="background-color"],
+.dynamic-page-container .payload-richtext a.btn-custom:hover,
+.dynamic-page-container .payload-richtext a.btn-red:hover,
+.dynamic-page-container .payload-richtext .btn-red:hover,
+.dynamic-page-container .payload-richtext a[role="button"]:hover {
+  background-color: #d11b20 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(237, 31, 36, 0.35);
+}
+
+/* Force CTA button text colors inside Dynamic Pages */
+.dynamic-page-container .payload-richtext a.cta-btn-force-black {
+  color: black !important;
+}
+.dynamic-page-container .payload-richtext a.cta-btn-force-black:hover {
+  color: black !important;
+}
+.dynamic-page-container .payload-richtext a.cta-btn-force-white {
+  color: white !important;
+}
+.dynamic-page-container .payload-richtext a.cta-btn-force-white:hover {
+  color: white !important;
+}

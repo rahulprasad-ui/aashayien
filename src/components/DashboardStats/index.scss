@@ -1,0 +1,231 @@
+.dashboard-stats {
+  margin-bottom: 3rem;
+  animation: fadeIn 0.5s ease-out;
+
+  &__header {
+    margin-bottom: 2rem;
+    h2 {
+      margin: 0;
+      font-weight: 700;
+      color: var(--theme-elevation-800);
+    }
+    p {
+      margin: 0.25rem 0 0;
+      color: var(--theme-elevation-500);
+      font-size: 0.95rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  &__card {
+    position: relative;
+    background: var(--theme-elevation-50);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-radius: var(--border-radius-l);
+    border: 1px solid var(--theme-elevation-150);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--brand-primary);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      h3 {
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--theme-elevation-550);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-weight: 600;
+      }
+
+      .icon {
+        font-size: 1.25rem;
+        opacity: 0.8;
+      }
+    }
+
+    .value {
+      font-size: 2.75rem;
+      font-weight: 700;
+      line-height: 1;
+      margin: 0.25rem 0;
+      color: var(--theme-elevation-900);
+    }
+
+    .trend {
+      font-size: 0.8rem;
+      color: var(--theme-elevation-400);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    &--primary { border-top: 4px solid var(--brand-primary); }
+    &--success { border-top: 4px solid #10b981; }
+    &--info { border-top: 4px solid #3b82f6; }
+  }
+
+  &__quick-actions {
+    background: var(--theme-elevation-50);
+    border-radius: var(--border-radius-l);
+    border: 1px solid var(--theme-elevation-150);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-shadow: var(--shadow-sm);
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--theme-elevation-800);
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1.25rem;
+      background: var(--theme-elevation-100);
+      border: 1px solid var(--theme-elevation-150);
+      border-radius: var(--border-radius-m);
+      text-decoration: none !important;
+      transition: all 0.2s ease;
+      text-align: center;
+
+      .icon {
+        font-size: 1.5rem;
+      }
+
+      span:not(.icon) {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--theme-elevation-700);
+      }
+
+      &:hover {
+        background: rgba(var(--brand-primary-rgb), 0.05);
+        border-color: var(--brand-primary);
+        transform: translateY(-2px);
+        
+        span:not(.icon) {
+          color: var(--brand-primary);
+        }
+      }
+    }
+  }
+
+  &__tables {
+    .tables-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  &__table-container {
+    background: var(--theme-elevation-50);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    h3 {
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--theme-elevation-800);
+      background: rgba(var(--brand-primary-rgb), 0.03);
+      border-bottom: 1px solid var(--theme-elevation-150);
+    }
+
+    .table-wrapper {
+      padding: 0.5rem 1.5rem 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+
+      th, td {
+        text-align: left;
+        padding: 1rem 0.5rem;
+        border-bottom: 1px solid var(--theme-elevation-100);
+      }
+
+      th {
+        color: var(--theme-elevation-400);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+
+      td {
+        color: var(--theme-elevation-700);
+      }
+
+      tr:hover td {
+        background-color: var(--theme-elevation-100);
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+    }
+
+    p {
+      padding: 2rem;
+      text-align: center;
+      color: var(--theme-elevation-400);
+      font-style: italic;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// Global override to hide the default Payload collection list on the dashboard
+:global {
+  // Hide the default card lists and grids that Payload generates
+  body.dashboard .gutter__content > h2,
+  body.dashboard .gutter__content > .grid {
+    display: none !important;
+  }
+
+  // Ensure our component is NOT hidden if it happens to be matched (unlikely as we use specific classes)
+  // But just in case Payload wraps things differently:
+  .dashboard-stats {
+    display: block !important;
+  }
+}

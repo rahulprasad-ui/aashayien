@@ -1,0 +1,14 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" rx="16" fill="#0F172A"/>
+  <rect x="120" y="40" width="360" height="320" rx="16" fill="#1E293B" stroke="#334155" stroke-width="2"/>
+  <rect x="150" y="70" width="140" height="16" rx="4" fill="#38BDF8"/>
+  <!-- Field 1 -->
+  <rect x="150" y="105" width="300" height="44" rx="8" fill="#0F172A" stroke="#334155"/>
+  <rect x="166" y="120" width="100" height="14" rx="3" fill="#64748B"/>
+  <!-- Field 2 -->
+  <rect x="150" y="165" width="300" height="44" rx="8" fill="#0F172A" stroke="#334155"/>
+  <rect x="166" y="180" width="130" height="14" rx="3" fill="#64748B"/>
+  <!-- Submit Button -->
+  <rect x="150" y="240" width="300" height="48" rx="8" fill="#ED1F24"/>
+  <rect x="240" y="258" width="120" height="12" rx="3" fill="#FFFFFF"/>
+</svg>
