@@ -2,8 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { MessageCircle, Phone, Download, ChevronRight } from 'lucide-react'
-import { cn } from '@/utilities/ui'
+import { MessageCircle, Phone, Download } from 'lucide-react'
 import type { Branding, Media } from '@/payload-types'
 
 interface ConversionButtonsProps {
@@ -232,46 +231,31 @@ export const ConversionButtons: React.FC<ConversionButtonsProps> = ({ branding }
         </div>
       )}
 
-      {/* Sticky CTA (Mobile Floating Bar & Desktop Side Button) */}
+      {/* Mobile Floating Sticky CTA Button (Only visible on mobile) */}
       {isCTAActive && (
-        <>
-          {/* Mobile Floating Sticky CTA Button (Only visible on mobile) */}
-          <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-1.5rem)] max-w-sm sm:max-w-md pointer-events-auto">
-            <Link
-              href={ctaLink}
-              onClick={handleCTAClick}
-              className="group relative flex items-center justify-between w-full px-4 py-3 bg-gradient-to-r from-[#7B6FF2] via-[#6D83F5] to-[#59B2E6] text-white rounded-2xl shadow-[0_8px_25px_rgba(109,131,245,0.45)] border border-white/25 active:scale-[0.98] hover:shadow-[0_10px_30px_rgba(109,131,245,0.6)] transition-all duration-200"
-              aria-label={ctaLabel}
-            >
-              {/* Left Wave Icon */}
-              <span className="text-2xl select-none shrink-0 drop-shadow-sm group-hover:rotate-12 transition-transform duration-200" role="img" aria-label="wave">
-                👋
-              </span>
+        <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-1.5rem)] max-w-sm sm:max-w-md pointer-events-auto">
+          <Link
+            href={ctaLink}
+            onClick={handleCTAClick}
+            className="group relative flex items-center justify-between w-full px-4 py-3 bg-gradient-to-r from-[#7B6FF2] via-[#6D83F5] to-[#59B2E6] text-white rounded-2xl shadow-[0_8px_25px_rgba(109,131,245,0.45)] border border-white/25 active:scale-[0.98] hover:shadow-[0_10px_30px_rgba(109,131,245,0.6)] transition-all duration-200"
+            aria-label={ctaLabel}
+          >
+            {/* Left Wave Icon */}
+            <span className="text-2xl select-none shrink-0 drop-shadow-sm group-hover:rotate-12 transition-transform duration-200" role="img" aria-label="wave">
+              👋
+            </span>
 
-              {/* Center Text */}
-              <div className="flex-1 flex flex-col items-center justify-center text-center px-2">
-                {renderMobileLabel()}
-              </div>
+            {/* Center Text */}
+            <div className="flex-1 flex flex-col items-center justify-center text-center px-2">
+              {renderMobileLabel()}
+            </div>
 
-              {/* Right Notification Badge */}
-              <div className="w-6 h-6 rounded-full bg-[#FFB800] text-white flex items-center justify-center text-xs font-black shrink-0 shadow-[0_2px_6px_rgba(0,0,0,0.25)] ring-2 ring-white/40">
-                1
-              </div>
-            </Link>
-          </div>
-
-          {/* Desktop Side Button (Only visible on web/desktop) */}
-          <div className="hidden md:block fixed top-1/2 -translate-y-1/2 right-0 z-[60]">
-            <Link
-              href={ctaLink}
-              onClick={handleCTAClick}
-              className="flex items-center gap-3 px-6 py-4 bg-[#ED1F24] text-white rounded-l-2xl font-bold shadow-[-4px_4px_20px_rgba(237,31,36,0.3)] hover:pr-10 transition-all duration-300 group"
-            >
-              <span className="text-lg">{ctaLabel}</span>
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        </>
+            {/* Right Notification Badge */}
+            <div className="w-6 h-6 rounded-full bg-[#FFB800] text-white flex items-center justify-center text-xs font-black shrink-0 shadow-[0_2px_6px_rgba(0,0,0,0.25)] ring-2 ring-white/40">
+              1
+            </div>
+          </Link>
+        </div>
       )}
     </>
   )
