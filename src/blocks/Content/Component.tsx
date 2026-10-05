@@ -7,6 +7,7 @@ import configPromise from '@payload-config'
 import { CMSLink } from '../../components/Link'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { FormBlock } from '@/blocks/Form/Component'
+import { LeadCaptureSection } from '@/components/aashayien/LeadCaptureSection'
 import { ImageWithFallback } from '@/components/aashayien/ImageWithFallback'
 import { Calendar, Bell, ExternalLink, GraduationCap, MapPin, Video } from 'lucide-react'
 import { formatDateTime } from '@/utilities/formatDateTime'
@@ -257,32 +258,77 @@ async function ColumnContent({ col }: { col: NonNullable<ContentBlockProps['colu
 export const ContentBlock: React.FC<ContentBlockProps> = async (props) => {
   const { columns } = props
 
-  const colsSpanClasses = {
+  const colsSpanClasses: Record<string, string> = {
     full: 'col-span-4 lg:col-span-12',
     half: 'col-span-4 lg:col-span-6',
     oneThird: 'col-span-4 lg:col-span-4',
     twoThirds: 'col-span-4 lg:col-span-8',
   }
 
-  return (
-    <div className="container my-4 md:my-6 px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-4 lg:grid-cols-12 gap-y-8 gap-x-8 lg:gap-x-12">
-        {columns &&
-          columns.length > 0 &&
-          columns.map((col, index) => {
-            const { size } = col
+  // If there's only 1 column and it's a form, automatically render the full Homepage Lead Section!
+  if (columns && columns.length === 1 && (columns[0] as any).contentType === 'form') {
+    const col = columns[0] as any
+    const formObj = col.form && typeof col.form === 'object' ? col.form : null
+    const payload = await getPayload({ config: configPromise })
+    let homeData: any = null
+    try {
+      homeData = await payload.findGlobal({
+        slug: 'home',
+        depth: 1,
+      })
+    } catch {
+      // ignore
+    }
 
-            return (
-              <div
-                className={cn(colsSpanClasses[size!], {
-                  'md:col-span-2': size !== 'full',
-                })}
-                key={index}
-              >
-                <ColumnContent col={col} />
-              </div>
-            )
-          })}
+    return (
+      <LeadCaptureSection
+        title={col.sectionTitle || homeData?.leadTitle}
+        description={homeData?.leadDescription}
+        form={formObj || homeData?.leadForm}
+        features={homeData?.leadFeatures}
+        menteeCountText={homeData?.menteeCountText}
+        mentorAvatars={homeData?.mentorAvatars}
+      />
+    )
+  }
+
+  // Check if this content block contains a form or structured section
+  const hasForm = columns?.some((c) => (c as any).contentType === 'form')
+
+  return (
+    <div className="container my-6 md:my-10 px-4 sm:px-6 lg:px-8">
+      <div
+        className={cn(
+          hasForm
+            ? 'bg-slate-50 dark:bg-neutral-800/50 rounded-[2rem] lg:rounded-[2.5rem] p-5 sm:p-8 lg:p-12 border border-slate-100 dark:border-neutral-800 shadow-2xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden'
+            : 'bg-white dark:bg-neutral-900 rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/40 dark:shadow-none border border-slate-100 dark:border-neutral-800',
+        )}
+      >
+        <div className="grid grid-cols-4 lg:grid-cols-12 gap-y-8 gap-x-8 lg:gap-x-12 items-center relative z-10">
+          {columns &&
+            columns.length > 0 &&
+            columns.map((col, index) => {
+              const { size, contentType } = col as any
+              const isForm = contentType === 'form'
+
+              return (
+                <div
+                  className={cn(
+                    colsSpanClasses[size!],
+                    isForm
+                      ? 'bg-white dark:bg-neutral-900 rounded-3xl lg:rounded-4xl p-5 sm:p-8 lg:p-10 shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-neutral-800'
+                      : '',
+                    {
+                      'md:col-span-2': size !== 'full',
+                    },
+                  )}
+                  key={index}
+                >
+                  <ColumnContent col={col} />
+                </div>
+              )
+            })}
+        </div>
       </div>
     </div>
   )

@@ -8,6 +8,9 @@ import { MessageSquare, Users, Sparkles, BookOpen } from 'lucide-react'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import type { Media } from '@/payload-types'
 
+import RichText from '@/components/RichText'
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
+
 interface LeadFeature {
   icon: string
   title: string
@@ -17,6 +20,7 @@ interface LeadFeature {
 interface LeadCaptureSectionProps {
   title?: string
   description?: string
+  introContent?: DefaultTypedEditorState
   form?: Form
   features?: LeadFeature[]
   menteeCountText?: string
@@ -46,6 +50,7 @@ const defaultFeatures: LeadFeature[] = [
 export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
   title,
   description,
+  introContent,
   form,
   features,
   menteeCountText,
@@ -65,18 +70,24 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-20 items-center relative z-10">
             {/* Left Side: Message */}
             <div className="space-y-6 lg:space-y-8 min-w-0">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-4 lg:mb-6 border border-blue-100 dark:border-blue-800">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Get Expert Guidance</span>
+              {introContent ? (
+                <div className="prose dark:prose-invert max-w-none">
+                  <RichText data={introContent} enableGutter={false} />
                 </div>
-                <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-slate-900 dark:text-white leading-[1.2] lg:leading-[1.1] mb-4 lg:mb-6 break-words">
-                  {title || 'Connect with ALEC Mentors'}
-                </h2>
-                <p className="text-slate-600 dark:text-neutral-400 text-base lg:text-xl leading-relaxed">
-                  {description || 'Take the first step towards your judiciary career. Our expert mentors are here to guide you through every stage of your preparation.'}
-                </p>
-              </div>
+              ) : (
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-4 lg:mb-6 border border-blue-100 dark:border-blue-800">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Get Expert Guidance</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-slate-900 dark:text-white leading-[1.2] lg:leading-[1.1] mb-4 lg:mb-6 break-words">
+                    {title || 'Connect with ALEC Mentors'}
+                  </h2>
+                  <p className="text-slate-600 dark:text-neutral-400 text-base lg:text-xl leading-relaxed">
+                    {description || 'Take the first step towards your judiciary career. Our expert mentors are here to guide you through every stage of your preparation.'}
+                  </p>
+                </div>
+              )}
 
               <div className="space-y-4 lg:space-y-6">
                 {displayFeatures.map((feature, index) => {

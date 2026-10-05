@@ -6,6 +6,9 @@ import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
+import { LeadCaptureSection } from '@/components/aashayien/LeadCaptureSection'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { FAQBlock } from '@/blocks/FAQ/Component'
 import { ClatPgBlock } from '@/blocks/ClatPgBlock/Component'
@@ -18,12 +21,42 @@ import { SuccessStoriesBlockComponent } from '@/blocks/SuccessStoriesBlock/Compo
 import { SliderBlockComponent } from '@/blocks/SliderBlock/Component'
 import { CustomBlockComponent } from '@/blocks/CustomBlock/Component'
 
+async function DynamicFormBlock(props: any) {
+  const { form, enableIntro, introContent } = props
+
+  let homeData: any = null
+  try {
+    const payload = await getPayload({ config })
+    homeData = await payload.findGlobal({
+      slug: 'home',
+      depth: 1,
+    })
+  } catch (error) {
+    console.error('Error fetching home global for DynamicFormBlock:', error)
+  }
+
+  const selectedForm =
+    typeof form === 'object' && form !== null ? form : (homeData?.leadForm as any)
+
+  return (
+    <LeadCaptureSection
+      title={homeData?.leadTitle}
+      description={homeData?.leadDescription}
+      form={selectedForm}
+      features={homeData?.leadFeatures}
+      menteeCountText={homeData?.menteeCountText}
+      mentorAvatars={homeData?.mentorAvatars}
+      introContent={enableIntro && introContent ? introContent : undefined}
+    />
+  )
+}
+
 const blockComponents = {
   sectionBlock: SectionBlockComponent,
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
-  formBlock: FormBlock,
+  formBlock: DynamicFormBlock,
   mediaBlock: MediaBlock,
   faq: FAQBlock,
   clatPgBlock: ClatPgBlock,
@@ -38,7 +71,13 @@ const blockComponents = {
 }
 
 // Blocks that manage their own full-width layout (no container wrapper)
-const fullWidthBlocks = new Set(['sectionBlock', 'clatPgBlock', 'sliderBlock', 'notificationsBlock'])
+const fullWidthBlocks = new Set([
+  'sectionBlock',
+  'clatPgBlock',
+  'sliderBlock',
+  'notificationsBlock',
+  'formBlock',
+])
 
 export const RenderBlocks: React.FC<{
   blocks: (Page['layout'][0] | DynamicPage['layout'][0])[] | null | undefined
@@ -63,8 +102,7 @@ export const RenderBlocks: React.FC<{
                   className={isFullWidth ? 'my-8 w-full' : 'my-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full'}
                   key={index}
                 >
-                  {/* @ts-expect-error there may be some mismatch between the expected types here */}
-                  <Block {...block} />
+                  <Block {...(block as any)} />
                 </div>
               )
             }

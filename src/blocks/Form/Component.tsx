@@ -178,11 +178,17 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div className={cn(disableContainer ? '' : 'container lg:max-w-3xl', className)}>
+    <div className={cn(disableContainer ? '' : 'container lg:max-w-2xl mx-auto', className)}>
       {enableIntro && introContent && !hasSubmitted && (
         <RichText className="mb-8 lg:mb-12" data={introContent} enableGutter={false} />
       )}
-      <div className="">
+      <div
+        className={cn(
+          disableContainer
+            ? ''
+            : 'bg-white dark:bg-neutral-900 rounded-3xl lg:rounded-4xl p-6 sm:p-8 lg:p-10 shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-neutral-800',
+        )}
+      >
         <FormProvider {...formMethods}>
           {error && (
             <div ref={errorRef} className="scroll-mt-20">
@@ -237,7 +243,7 @@ export const FormBlock: React.FC<
               type="submit"
               disabled={isLoading}
               className={cn(
-                'w-full md:w-auto px-8 mt-4 h-12 bg-[#ED1F24] text-white rounded-lg hover:bg-[#d11b20] transition-colors font-medium flex items-center justify-center gap-2',
+                'w-full bg-[#ED1F24] hover:bg-[#d11b20] text-white py-3.5 lg:py-4 rounded-xl font-bold text-base lg:text-lg shadow-lg shadow-[#ED1F24]/20 transition-all active:scale-[0.98] whitespace-normal h-auto min-h-[3rem] mt-2 flex items-center justify-center gap-2',
                 submitButtonClassName,
               )}
             >
