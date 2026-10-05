@@ -11,7 +11,7 @@ interface ConversionButtonsProps {
 }
 
 export const ConversionButtons: React.FC<ConversionButtonsProps> = ({ branding }) => {
-  const { stickyCTA, conversions, contactInfo } = branding
+  const { stickyCTA, conversions, contactInfo } = branding || {}
 
   React.useEffect(() => {
     if (typeof window === 'undefined') return
@@ -101,20 +101,102 @@ export const ConversionButtons: React.FC<ConversionButtonsProps> = ({ branding }
   const phone = (conversions as any)?.callNumber || contactInfo?.phone
   const whatsapp = (conversions as any)?.whatsappNumber || contactInfo?.whatsapp
 
+  const isCTAActive = true
+  const ctaLink = '/#lead-form'
+  const ctaLabel = 'Book Free Counselling Session'
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const handleHashScroll = () => {
+      if (window.location.hash === '#lead-form') {
+        const target = document.getElementById('lead-form')
+        if (target) {
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            const firstInput = target.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+              'input:not([type="hidden"]), select, textarea'
+            )
+            firstInput?.focus({ preventScroll: true })
+          }, 250)
+        }
+      }
+    }
+
+    handleHashScroll()
+    window.addEventListener('hashchange', handleHashScroll)
+    return () => window.removeEventListener('hashchange', handleHashScroll)
+  }, [])
+
+  const handleCTAClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
+    const isHomePage = currentPath === '/' || currentPath === ''
+    const target = document.getElementById('lead-form') || (isHomePage ? document.querySelector('form') : null)
+
+    if (target && (isHomePage || ctaLink.includes('#lead-form') || ctaLink.startsWith('#'))) {
+      e.preventDefault()
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      if (window.history.pushState) {
+        window.history.pushState(null, '', '#lead-form')
+      }
+      setTimeout(() => {
+        const firstInput = target.querySelector<HTMLInputElement | HTMLTextAreaElement>(
+          'input:not([type="hidden"]), select, textarea'
+        )
+        firstInput?.focus({ preventScroll: true })
+      }, 400)
+    }
+  }
+
+  const renderMobileLabel = () => {
+    const text = ctaLabel
+    if (text.toLowerCase().includes('counselling') || text.toLowerCase().includes('session')) {
+      return (
+        <div className="flex flex-col items-center justify-center leading-tight">
+          <span className="text-white font-bold text-sm sm:text-base tracking-wide drop-shadow-sm">
+            Book Free Counselling
+          </span>
+          <span className="text-white font-bold text-xs sm:text-sm tracking-wide drop-shadow-sm opacity-95">
+            Session
+          </span>
+        </div>
+      )
+    }
+    const words = text.split(' ')
+    if (words.length >= 3) {
+      const mid = Math.ceil(words.length / 2)
+      return (
+        <div className="flex flex-col items-center justify-center leading-tight">
+          <span className="text-white font-bold text-sm sm:text-base tracking-wide drop-shadow-sm">
+            {words.slice(0, mid).join(' ')}
+          </span>
+          <span className="text-white font-bold text-xs sm:text-sm tracking-wide drop-shadow-sm opacity-95">
+            {words.slice(mid).join(' ')}
+          </span>
+        </div>
+      )
+    }
+    return (
+      <span className="text-white font-bold text-sm sm:text-base tracking-wide drop-shadow-sm">
+        {text}
+      </span>
+    )
+  }
+
   return (
     <>
       {/* Floating Buttons (WhatsApp & Phone) */}
       {showFloating && (
-        <div className="fixed bottom-24 right-6 z-50 flex flex-col gap-4">
+        <div className="fixed bottom-24 right-4 sm:right-6 z-50 flex flex-col gap-3 sm:gap-4">
           {showWhatsapp && whatsapp && (
             <a
               href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
               aria-label="Chat on WhatsApp"
             >
-              <MessageCircle className="w-7 h-7" />
+              <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7" />
               <span className="absolute right-full mr-4 px-3 py-1 bg-white text-gray-800 text-sm font-medium rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                 WhatsApp Us
               </span>
@@ -123,10 +205,10 @@ export const ConversionButtons: React.FC<ConversionButtonsProps> = ({ branding }
           {showCall && phone && (
             <a
               href={`tel:${phone.replace(/\D/g, '')}`}
-              className="group relative flex items-center justify-center w-14 h-14 bg-[#ED1F24] text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-[#ED1F24] text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
               aria-label="Call Us"
             >
-              <Phone className="w-6 h-6" />
+              <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
               <span className="absolute right-full mr-4 px-3 py-1 bg-white text-gray-800 text-sm font-medium rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                 Call Now
               </span>
@@ -137,11 +219,11 @@ export const ConversionButtons: React.FC<ConversionButtonsProps> = ({ branding }
               href={brochure.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative flex items-center justify-center w-14 h-14 bg-slate-800 text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+              className="group relative flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-slate-800 text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
               aria-label="Download Brochure"
               download
             >
-              <Download className="w-6 h-6" />
+              <Download className="w-5 h-5 sm:w-6 sm:h-6" />
               <span className="absolute right-full mr-4 px-3 py-1 bg-white text-gray-800 text-sm font-medium rounded-lg shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
                 Download Brochure
               </span>
@@ -150,31 +232,46 @@ export const ConversionButtons: React.FC<ConversionButtonsProps> = ({ branding }
         </div>
       )}
 
-      {/* Sticky CTA (Bottom Bar for Mobile, Side for Desktop) */}
-      {stickyCTA?.isActive && (
-        <div className="fixed bottom-0 left-0 right-0 z-[60] md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:right-0 md:left-auto md:w-auto">
-          {/* Mobile Bottom Bar */}
-          <div className="md:hidden w-full bg-white/80 backdrop-blur-md border-t border-gray-200 p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
+      {/* Sticky CTA (Mobile Floating Bar & Desktop Side Button) */}
+      {isCTAActive && (
+        <>
+          {/* Mobile Floating Sticky CTA Button (Only visible on mobile) */}
+          <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-[9999] w-[calc(100%-1.5rem)] max-w-sm sm:max-w-md pointer-events-auto">
             <Link
-              href={stickyCTA.link || '/contact'}
-              className="flex items-center justify-center w-full py-4 bg-[#ED1F24] text-white rounded-xl font-bold text-lg shadow-lg active:scale-[0.98] transition-all"
+              href={ctaLink}
+              onClick={handleCTAClick}
+              className="group relative flex items-center justify-between w-full px-4 py-3 bg-gradient-to-r from-[#7B6FF2] via-[#6D83F5] to-[#59B2E6] text-white rounded-2xl shadow-[0_8px_25px_rgba(109,131,245,0.45)] border border-white/25 active:scale-[0.98] hover:shadow-[0_10px_30px_rgba(109,131,245,0.6)] transition-all duration-200"
+              aria-label={ctaLabel}
             >
-              {stickyCTA.label}
-              <ChevronRight className="ml-2 w-5 h-5" />
+              {/* Left Wave Icon */}
+              <span className="text-2xl select-none shrink-0 drop-shadow-sm group-hover:rotate-12 transition-transform duration-200" role="img" aria-label="wave">
+                👋
+              </span>
+
+              {/* Center Text */}
+              <div className="flex-1 flex flex-col items-center justify-center text-center px-2">
+                {renderMobileLabel()}
+              </div>
+
+              {/* Right Notification Badge */}
+              <div className="w-6 h-6 rounded-full bg-[#FFB800] text-white flex items-center justify-center text-xs font-black shrink-0 shadow-[0_2px_6px_rgba(0,0,0,0.25)] ring-2 ring-white/40">
+                1
+              </div>
             </Link>
           </div>
 
-          {/* Desktop Side Button */}
-          <div className="hidden md:block">
+          {/* Desktop Side Button (Only visible on web/desktop) */}
+          <div className="hidden md:block fixed top-1/2 -translate-y-1/2 right-0 z-[60]">
             <Link
-              href={stickyCTA.link || '/contact'}
+              href={ctaLink}
+              onClick={handleCTAClick}
               className="flex items-center gap-3 px-6 py-4 bg-[#ED1F24] text-white rounded-l-2xl font-bold shadow-[-4px_4px_20px_rgba(237,31,36,0.3)] hover:pr-10 transition-all duration-300 group"
             >
-              <span className="text-lg">{stickyCTA.label}</span>
+              <span className="text-lg">{ctaLabel}</span>
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-        </div>
+        </>
       )}
     </>
   )

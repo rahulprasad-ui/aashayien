@@ -245,13 +245,13 @@ export const Branding: GlobalConfig = {
                   name: 'isActive',
                   label: 'Show Sticky CTA',
                   type: 'checkbox',
-                  defaultValue: false,
+                  defaultValue: true,
                 },
                 {
                   name: 'label',
                   label: 'Button Label',
                   type: 'text',
-                  defaultValue: 'Book Free Demo',
+                  defaultValue: 'Book Free Counselling Session',
                   admin: {
                     condition: (_, { isActive }) => isActive,
                   },
@@ -260,7 +260,7 @@ export const Branding: GlobalConfig = {
                   name: 'link',
                   label: 'Button Link',
                   type: 'text',
-                  defaultValue: '/contact',
+                  defaultValue: '/#lead-form',
                   admin: {
                     condition: (_, { isActive }) => isActive,
                   },

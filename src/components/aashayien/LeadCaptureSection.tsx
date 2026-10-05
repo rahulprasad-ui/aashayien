@@ -55,7 +55,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
   const displayMenteeText = menteeCountText || 'Join 5000+ students already being mentored.'
 
   return (
-    <section className="py-12 lg:py-24 bg-white dark:bg-neutral-900 overflow-hidden">
+    <section id="lead-form" className="py-12 lg:py-24 bg-white dark:bg-neutral-900 overflow-hidden scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-slate-50 dark:bg-neutral-800/50 rounded-[2rem] lg:rounded-[2.5rem] p-5 sm:p-8 lg:p-16 border border-slate-100 dark:border-neutral-800 shadow-2xl shadow-slate-200/50 dark:shadow-none relative overflow-hidden">
           {/* Decorative Elements */}
